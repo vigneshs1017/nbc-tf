@@ -72,10 +72,6 @@ variable "db_port" {
 }
 
 
-# variable "db_param_family" {
-#     type = string
-# }
-
 variable "db_instance_count" {
     type = number
 }
@@ -95,26 +91,6 @@ variable "load_balancer_certificate" {
   
 }
 
-# variable "s3_bucket_name" {
-#     type = string
-  
-# }
-
-# variable "cloudfront_logging_bucket_name" {
-#    type = string  
-# }
-
-
-# variable "frntend_codecommit_branch_name" {
-#     type = string
-  
-# }
-
-# variable "backend_codecommit_branch_name" {
-#     type = string
-  
-# }
-
 variable "account_id" {
     type = number
   
@@ -124,17 +100,3 @@ variable "aws_region" {
     type = string 
   
 }
-
-# variable "web_container_definitions" {
-#     type = string
-  
-# }
-
-
-# variable "backend_repo_name" {
-#     type = string  
-# }
-
-# variable "frnt_end_repo_name" {
-#     type = string
-# }

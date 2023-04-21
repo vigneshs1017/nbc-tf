@@ -38,6 +38,7 @@ module "nbc_aws" {
     repo_name = "nbcdemoapp"
     branch_name = "master"
     load_balancer_certificate = "arn:aws:acm:ca-central-1:919490798061:certificate/e2b8c3d2-998d-4b8b-847e-753489d09b75"
-    # web_container_definitions = "web-task-definition.json"
+    ##### ECS ######
+
 
 }

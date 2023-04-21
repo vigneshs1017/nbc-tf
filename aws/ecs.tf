@@ -24,15 +24,6 @@ resource "aws_iam_role_policy_attachment" "ecsTaskExecutionRole_policy" {
 }
 ####### ECS IAM Role ########
 
-#####  ECR ########
-# resource "aws_ecr_repository" "aws-ecr-repo" {
-#   name = "${var.name}-ecr"
-#   tags = {
-#     Name        = "${var.name}-ecr"
-
-#   }
-# }
-#####  ECR ########
 
 ######## ECS Cluster #########
 resource "aws_ecs_cluster" "aws-ecs-cluster" {
@@ -49,14 +40,6 @@ resource "aws_cloudwatch_log_group" "log-group" {
 }
 ######## Cloud Watch Log Group ##########
 
-###### Task Definition #########
-# data "template_file" "task_definition" {
-#   template               = file("./web_container_definitions")
-#   vars = {
-#     log_group_region     = var.aws_region
-#   }
-# }
-
 resource "aws_ecs_task_definition" "ecs_td" {
 
   family                = "${var.name}-web"
@@ -64,7 +47,7 @@ resource "aws_ecs_task_definition" "ecs_td" {
   [
     {
       "name": "${var.name}-container",
-      "image": "919490798061.dkr.ecr.ca-central-1.amazonaws.com/nbc-app:v1",
+      "image": "919490798061.dkr.ecr.ca-central-1.amazonaws.com/nbc-app:925b1af",
       "entryPoint": [],
       "essential": true,
       "logConfiguration": {
@@ -111,7 +94,7 @@ resource "aws_alb" "application_load_balancer" {
 
 resource "aws_lb_target_group" "target_group" {
   name        = "${var.name}-tg"
-  port        = 80
+  port        = 443
   protocol    = "HTTP"
   target_type = "ip"
   vpc_id      = aws_vpc.nbc_vpc.id
@@ -134,8 +117,9 @@ resource "aws_lb_target_group" "target_group" {
 
 resource "aws_lb_listener" "listener" {
   load_balancer_arn = aws_alb.application_load_balancer.id
-  port              = "80"
-  protocol          = "HTTP"
+  port              = "443"
+  protocol          = "HTTPS"
+  certificate_arn = var.load_balancer_certificate
 
   default_action {
     type             = "forward"

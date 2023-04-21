@@ -16,10 +16,6 @@ resource "aws_db_subnet_group" "db_public_subnet_group" {
   }
 }
 
-# resource "aws_db_parameter_group" "db_parameter" {
-#   name   = "${var.name}-db-parameter"
-#   family = var.db_param_family
-# }
 
 resource "aws_security_group" "rds" {
   name        = "${var.name}-rds-sg"
@@ -50,7 +46,6 @@ resource "aws_db_instance" "private_rds_db" {
   password               = var.db_password
   db_subnet_group_name   = "${var.name}-db-private-subnet"
   vpc_security_group_ids = [aws_security_group.rds.id]
-#   parameter_group_name   = aws_db_parameter_group.db_parameter.name
   publicly_accessible    = false
   skip_final_snapshot    = var.skip_final_snapshot
 }
@@ -67,7 +62,6 @@ resource "aws_db_instance" "public_rds_db" {
   password               = var.db_password
   db_subnet_group_name   = "${var.name}-db-public-subnet"
   vpc_security_group_ids = [aws_security_group.rds.id]
-#   parameter_group_name   = aws_db_parameter_group.db_parameter.name
   publicly_accessible    = true
   skip_final_snapshot    = var.skip_final_snapshot
 }
